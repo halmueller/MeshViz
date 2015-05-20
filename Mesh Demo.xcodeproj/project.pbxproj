@@ -1,0 +1,422 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2BBDC3451B0C435D000307D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBDC3441B0C435D000307D3 /* AppDelegate.m */; };
+		2BBDC3471B0C435D000307D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBDC3461B0C435D000307D3 /* main.m */; };
+		2BBDC34A1B0C435D000307D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBDC3491B0C435D000307D3 /* ViewController.m */; };
+		2BBDC34C1B0C435D000307D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BBDC34B1B0C435D000307D3 /* Images.xcassets */; };
+		2BBDC34F1B0C435D000307D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BBDC34D1B0C435D000307D3 /* Main.storyboard */; };
+		2BBDC35B1B0C435D000307D3 /* Mesh_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBDC35A1B0C435D000307D3 /* Mesh_DemoTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2BBDC3551B0C435D000307D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BBDC3361B0C435D000307D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BBDC33D1B0C435D000307D3;
+			remoteInfo = "Mesh Demo";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2BBDC33E1B0C435D000307D3 /* Mesh Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mesh Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BBDC3421B0C435D000307D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BBDC3431B0C435D000307D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2BBDC3441B0C435D000307D3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2BBDC3461B0C435D000307D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2BBDC3481B0C435D000307D3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2BBDC3491B0C435D000307D3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2BBDC34B1B0C435D000307D3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		2BBDC34E1B0C435D000307D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2BBDC3541B0C435D000307D3 /* Mesh DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mesh DemoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BBDC3591B0C435D000307D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2BBDC35A1B0C435D000307D3 /* Mesh_DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mesh_DemoTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2BBDC33B1B0C435D000307D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BBDC3511B0C435D000307D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2BBDC3351B0C435D000307D3 = {
+			isa = PBXGroup;
+			children = (
+				2BBDC3401B0C435D000307D3 /* Mesh Demo */,
+				2BBDC3571B0C435D000307D3 /* Mesh DemoTests */,
+				2BBDC33F1B0C435D000307D3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2BBDC33F1B0C435D000307D3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2BBDC33E1B0C435D000307D3 /* Mesh Demo.app */,
+				2BBDC3541B0C435D000307D3 /* Mesh DemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2BBDC3401B0C435D000307D3 /* Mesh Demo */ = {
+			isa = PBXGroup;
+			children = (
+				2BBDC3431B0C435D000307D3 /* AppDelegate.h */,
+				2BBDC3441B0C435D000307D3 /* AppDelegate.m */,
+				2BBDC3481B0C435D000307D3 /* ViewController.h */,
+				2BBDC3491B0C435D000307D3 /* ViewController.m */,
+				2BBDC34B1B0C435D000307D3 /* Images.xcassets */,
+				2BBDC34D1B0C435D000307D3 /* Main.storyboard */,
+				2BBDC3411B0C435D000307D3 /* Supporting Files */,
+			);
+			path = "Mesh Demo";
+			sourceTree = "<group>";
+		};
+		2BBDC3411B0C435D000307D3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2BBDC3421B0C435D000307D3 /* Info.plist */,
+				2BBDC3461B0C435D000307D3 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2BBDC3571B0C435D000307D3 /* Mesh DemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				2BBDC35A1B0C435D000307D3 /* Mesh_DemoTests.m */,
+				2BBDC3581B0C435D000307D3 /* Supporting Files */,
+			);
+			path = "Mesh DemoTests";
+			sourceTree = "<group>";
+		};
+		2BBDC3581B0C435D000307D3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2BBDC3591B0C435D000307D3 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2BBDC33D1B0C435D000307D3 /* Mesh Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BBDC35E1B0C435D000307D3 /* Build configuration list for PBXNativeTarget "Mesh Demo" */;
+			buildPhases = (
+				2BBDC33A1B0C435D000307D3 /* Sources */,
+				2BBDC33B1B0C435D000307D3 /* Frameworks */,
+				2BBDC33C1B0C435D000307D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Mesh Demo";
+			productName = "Mesh Demo";
+			productReference = 2BBDC33E1B0C435D000307D3 /* Mesh Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2BBDC3531B0C435D000307D3 /* Mesh DemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BBDC3611B0C435D000307D3 /* Build configuration list for PBXNativeTarget "Mesh DemoTests" */;
+			buildPhases = (
+				2BBDC3501B0C435D000307D3 /* Sources */,
+				2BBDC3511B0C435D000307D3 /* Frameworks */,
+				2BBDC3521B0C435D000307D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BBDC3561B0C435D000307D3 /* PBXTargetDependency */,
+			);
+			name = "Mesh DemoTests";
+			productName = "Mesh DemoTests";
+			productReference = 2BBDC3541B0C435D000307D3 /* Mesh DemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2BBDC3361B0C435D000307D3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "UW GeoClaw";
+				TargetAttributes = {
+					2BBDC33D1B0C435D000307D3 = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					2BBDC3531B0C435D000307D3 = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = 2BBDC33D1B0C435D000307D3;
+					};
+				};
+			};
+			buildConfigurationList = 2BBDC3391B0C435D000307D3 /* Build configuration list for PBXProject "Mesh Demo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2BBDC3351B0C435D000307D3;
+			productRefGroup = 2BBDC33F1B0C435D000307D3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2BBDC33D1B0C435D000307D3 /* Mesh Demo */,
+				2BBDC3531B0C435D000307D3 /* Mesh DemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2BBDC33C1B0C435D000307D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BBDC34C1B0C435D000307D3 /* Images.xcassets in Resources */,
+				2BBDC34F1B0C435D000307D3 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BBDC3521B0C435D000307D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2BBDC33A1B0C435D000307D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BBDC34A1B0C435D000307D3 /* ViewController.m in Sources */,
+				2BBDC3471B0C435D000307D3 /* main.m in Sources */,
+				2BBDC3451B0C435D000307D3 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BBDC3501B0C435D000307D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BBDC35B1B0C435D000307D3 /* Mesh_DemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BBDC3561B0C435D000307D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BBDC33D1B0C435D000307D3 /* Mesh Demo */;
+			targetProxy = 2BBDC3551B0C435D000307D3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2BBDC34D1B0C435D000307D3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BBDC34E1B0C435D000307D3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2BBDC35C1B0C435D000307D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2BBDC35D1B0C435D000307D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2BBDC35F1B0C435D000307D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Mesh Demo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2BBDC3601B0C435D000307D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Mesh Demo/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2BBDC3621B0C435D000307D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Mesh DemoTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mesh Demo.app/Contents/MacOS/Mesh Demo";
+			};
+			name = Debug;
+		};
+		2BBDC3631B0C435D000307D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Mesh DemoTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mesh Demo.app/Contents/MacOS/Mesh Demo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2BBDC3391B0C435D000307D3 /* Build configuration list for PBXProject "Mesh Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BBDC35C1B0C435D000307D3 /* Debug */,
+				2BBDC35D1B0C435D000307D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BBDC35E1B0C435D000307D3 /* Build configuration list for PBXNativeTarget "Mesh Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BBDC35F1B0C435D000307D3 /* Debug */,
+				2BBDC3601B0C435D000307D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2BBDC3611B0C435D000307D3 /* Build configuration list for PBXNativeTarget "Mesh DemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BBDC3621B0C435D000307D3 /* Debug */,
+				2BBDC3631B0C435D000307D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2BBDC3361B0C435D000307D3 /* Project object */;
+}
