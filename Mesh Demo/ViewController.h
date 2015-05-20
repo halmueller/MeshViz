@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@import SceneKit;
 
 @interface ViewController : NSViewController
 
