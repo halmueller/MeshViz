@@ -25,6 +25,8 @@
 	SCNNode *cylNode = [SCNNode nodeWithGeometry:cylGeom];
 	cylNode.position = SCNVector3Make(2., 2., 8.0);
 	[scene.rootNode addChildNode:cylNode];
+	
+	[scene.rootNode addChildNode:[[self class] ambientLights]];
 	[scene.rootNode addChildNode:[[self class] floorNode]];
 
 /*	let scene = SCNScene()
@@ -50,6 +52,16 @@
 	scene.rootNode.addChildNode(floor)
 */
 	
+}
+
++ (SCNNode *)ambientLights
+{
+	SCNNode *lightNode = [SCNNode new];
+	SCNLight *light = [SCNLight light];
+	light.type = SCNLightTypeAmbient;
+	light.color = [NSColor colorWithWhite:0.1 alpha:1.0];
+	lightNode.light = light;
+	return lightNode;
 }
 
 + (SCNNode *)floorNode
