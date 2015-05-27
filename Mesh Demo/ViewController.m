@@ -204,9 +204,9 @@ typedef struct {
 {
 	// modified from https://github.com/d-ronnqvist/SCNBook-code/tree/master/Chapter%2007%20-%20Custom%20Mesh%20Geometry
 	
-	// The mesh will have a size of 100 x 100
-	int width  = 100;
-	int height = 100;
+#define MeshSize 1500
+	int width  = MeshSize;
+	int height = MeshSize;
 	
 	
 	// Generate the index data for the mesh
