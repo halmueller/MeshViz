@@ -147,27 +147,29 @@
 	// Create the geometry object with the sources and the element
 	SCNGeometry *geometry =
 	[SCNGeometry geometryWithSources:@[vertexSource, normalSource, textureSource]
-							elements:@[lineElement]];
+							elements:@[surfaceElement]];
 	// Give it a blue checker board texture
-	SCNMaterial *blueMaterial      = [SCNMaterial material];
-	blueMaterial.diffuse.contents  = [NSImage imageNamed:@"checkerboard"];
-	blueMaterial.specular.contents = [NSColor darkGrayColor];
-	blueMaterial.shininess         = 0.25;
+	SCNMaterial *blueCheckerboardMaterial      = [SCNMaterial material];
+	blueCheckerboardMaterial.diffuse.contents  = [NSImage imageNamed:@"checkerboard"];
+	blueCheckerboardMaterial.specular.contents = [NSColor darkGrayColor];
+	blueCheckerboardMaterial.shininess         = 0.25;
 	
 	// Scale down the image when used as a texture ...
-	blueMaterial.diffuse.contentsTransform = CATransform3DMakeScale(20.0, 20.0, 1.0);
+	blueCheckerboardMaterial.diffuse.contentsTransform = CATransform3DMakeScale(20.0, 20.0, 1.0);
 	// ... and make it repeat
-	blueMaterial.diffuse.wrapS = SCNRepeat;
-	blueMaterial.diffuse.wrapT = SCNRepeat;
+	blueCheckerboardMaterial.diffuse.wrapS = SCNRepeat;
+	blueCheckerboardMaterial.diffuse.wrapT = SCNRepeat;
 	
 	SCNMaterial *yellowMaterial             = [SCNMaterial material];
-	yellowMaterial.diffuse.contents         = [NSColor yellowColor];
+	yellowMaterial.ambient.contents         = [NSColor yellowColor];
+	yellowMaterial.cullMode = SCNCullFront;
+	yellowMaterial.doubleSided = NO;
 	
 	SCNMaterial *lineMaterial      = [SCNMaterial material];
 	lineMaterial.emission.contents = [NSColor whiteColor];
 	
-	//geometry.materials = @[blueMaterial];
-	geometry.materials = @[lineMaterial];
+	geometry.materials = @[blueCheckerboardMaterial];
+//	geometry.materials = @[lineMaterial];
 	NSLog(@"geometry element count %zd", geometry.geometryElementCount);
 	return geometry;
 }
