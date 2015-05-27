@@ -15,6 +15,7 @@
 		2BBDC35B1B0C435D000307D3 /* Mesh_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BBDC35A1B0C435D000307D3 /* Mesh_DemoTests.m */; };
 		2BBDC3651B0C4609000307D3 /* green2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BBDC3641B0C4609000307D3 /* green2.png */; };
 		2BBDC3671B156CF8000307D3 /* checkerboard.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2BBDC3661B156CF8000307D3 /* checkerboard.jpg */; };
+		2BF43C851B158C3200183E30 /* MVKMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF43C831B1577B000183E30 /* MVKMesh.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,8 @@
 		2BBDC35A1B0C435D000307D3 /* Mesh_DemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mesh_DemoTests.m; sourceTree = "<group>"; };
 		2BBDC3641B0C4609000307D3 /* green2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green2.png; sourceTree = "<group>"; };
 		2BBDC3661B156CF8000307D3 /* checkerboard.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = checkerboard.jpg; sourceTree = "<group>"; };
+		2BF43C821B1577B000183E30 /* MVKMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVKMesh.h; sourceTree = "<group>"; };
+		2BF43C831B1577B000183E30 /* MVKMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVKMesh.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +90,8 @@
 				2BBDC3441B0C435D000307D3 /* AppDelegate.m */,
 				2BBDC3481B0C435D000307D3 /* ViewController.h */,
 				2BBDC3491B0C435D000307D3 /* ViewController.m */,
+				2BF43C821B1577B000183E30 /* MVKMesh.h */,
+				2BF43C831B1577B000183E30 /* MVKMesh.m */,
 				2BBDC34B1B0C435D000307D3 /* Images.xcassets */,
 				2BBDC3641B0C4609000307D3 /* green2.png */,
 				2BBDC3661B156CF8000307D3 /* checkerboard.jpg */,
@@ -226,6 +231,7 @@
 				2BBDC34A1B0C435D000307D3 /* ViewController.m in Sources */,
 				2BBDC3471B0C435D000307D3 /* main.m in Sources */,
 				2BBDC3451B0C435D000307D3 /* AppDelegate.m in Sources */,
+				2BF43C851B158C3200183E30 /* MVKMesh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +421,7 @@
 				2BBDC3601B0C435D000307D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2BBDC3611B0C435D000307D3 /* Build configuration list for PBXNativeTarget "Mesh DemoTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +430,7 @@
 				2BBDC3631B0C435D000307D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

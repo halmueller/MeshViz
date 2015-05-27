@@ -7,10 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "MVKMesh.h"
+
 @import GLKit;
 
 @interface ViewController ()
-@property (nonatomic, retain) IBOutlet SCNView *sceneView;
+@property (nonatomic, strong) IBOutlet SCNView *sceneView;
+@property (nonatomic, strong) MVKMesh *mesh;
 @end
 
 @implementation ViewController
@@ -22,7 +25,7 @@
 	self.sceneView.scene = scene;
 	self.sceneView.backgroundColor = [NSColor blueColor];
 
-	[self addMesh:scene];
+	[self addMesh];
 	
 	[scene.rootNode addChildNode:[[self class] ambientLights]];
 //	[scene.rootNode addChildNode:[[self class] floorNode]];
@@ -155,10 +158,10 @@ typedef struct {
 	return [SCNGeometry geometryWithSources:@[source, normalSource] elements:@[element]];
 }
 
-- (void)addMesh:(SCNScene *)scene;
+- (void)addMesh
 {
-	SCNGeometry *mesh = [[self class] meshGeometry];
-	[scene.rootNode addChildNode:[SCNNode nodeWithGeometry:mesh]];
+	self.mesh = [[MVKMesh alloc] initWithMultiplier:3.0];
+	[self.sceneView.scene.rootNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.geometry]];
 }
 
 - (void)addSeashell:(SCNScene *)scene;
@@ -200,143 +203,6 @@ typedef struct {
 	return floorNode;
 }
 
-+ (SCNGeometry *)meshGeometry
-{
-	// modified from https://github.com/d-ronnqvist/SCNBook-code/tree/master/Chapter%2007%20-%20Custom%20Mesh%20Geometry
-	
-#define MeshSize 1500
-	int width  = MeshSize;
-	int height = MeshSize;
-	
-	
-	// Generate the index data for the mesh
-	// ------------------------------------
-	
-	NSUInteger indexCount = (2 * width + 1) * (height-1);
-	// Create a buffer for the index data
-	int *indices = calloc(indexCount, sizeof(int));
-	
-	// Generate index data as desscribed in the chapter
-	int i = 0;
-	for (int h=0 ; h<height-1 ; h++) {
-		BOOL isEven = h%2 == 0;
-		if (isEven) {
-			// --->
-			for (int w=0 ; w<width ; w++) {
-				indices[i++] =  h    * width + w;
-				indices[i++] = (h+1) * width + w;
-			}
-		} else {
-			// <---
-			for (int w=width-1 ; w>=0 ; w--) {
-				indices[i++] = (h+0) * width + w;
-				indices[i++] = (h+1) * width + w;
-			}
-		}
-		int previous = indices[i-1];
-		indices[i++] = previous;
-	}
-	NSAssert(indexCount == i, @"Should have added as many lines as the size of the buffer");
-	
-	
-	
-	// Generate the source data for the mesh
-	// -------------------------------------
-	
-	// Create buffers for the source data
-	NSUInteger pointCount = width * height;
-	SCNVector3 *vertices = calloc(pointCount, sizeof(SCNVector3));
-	SCNVector3 *normals  = calloc(pointCount, sizeof(SCNVector3));
-	CGPoint    *UVs = calloc(pointCount, sizeof(CGPoint));
-	
-	
-	// Define the function that is used to calculate the y(x,z)
-	GLKVector3(^function)(float, float) = ^(float x, float z) {
-		float angle = 1.0/2.0 * sqrt(pow(x, 2) + pow(z, 2));
-		return GLKVector3Make(x,
-							  2.0 * cos(angle),
-							  z);
-	};
-	
-	// Define the range of x and z for which values are calculated
-	float minX = -30.0, maxX = 30.0;
-	float minZ = -30.0, maxZ = 30.0;
-	
-	
-	for (int h = 0 ; h<height ; h++) {
-		for (int w = 0 ; w<width ; w++) {
-			// Calculate x and z for this point
-			CGFloat x = w/(CGFloat)(width-1)  * (maxX-minX) + minX;
-			CGFloat z = h/(CGFloat)(height-1) * (maxZ-minZ) + minZ;
-			
-			// The index for the vertex/normal/texture buffers
-			NSUInteger index = h*width + w;
-			
-			// Vertex data
-			GLKVector3 current = function(x,z);
-			vertices[index] = SCNVector3FromGLKVector3(current);
-			
-			// Normal data
-			CGFloat delta = 0.001;
-			GLKVector3 nextX   = function(x+delta, z);
-			GLKVector3 nextZ   = function(x,       z+delta);
-			
-			GLKVector3 dx = GLKVector3Subtract(nextX, current);
-			GLKVector3 dz = GLKVector3Subtract(nextZ, current);
-			
-			GLKVector3 normal = GLKVector3Normalize( GLKVector3CrossProduct(dz, dx) );
-			normals[index] = SCNVector3FromGLKVector3(normal);
-			
-			// Texture data
-			UVs[index] = CGPointMake(w/(CGFloat)(width-1),
-									 h/(CGFloat)(height-1));
-		}
-	}
-	
-	
-	// Create sources for the vertext/normal/texture data
-	SCNGeometrySource *vertexSource  =
-	[SCNGeometrySource geometrySourceWithVertices:vertices
-											count:pointCount];
-	SCNGeometrySource *normalSource  =
-	[SCNGeometrySource geometrySourceWithNormals:normals
-										   count:pointCount];
-	SCNGeometrySource *textureSource =
-	[SCNGeometrySource geometrySourceWithTextureCoordinates:UVs
-													  count:pointCount];
-	
-	
-	// Create index data ...
-	NSData *indexData = [NSData dataWithBytes:indices
-									   length:sizeof(indices)*indexCount];
-	// ... and use it to create the geometry element
-	SCNGeometryElement *element =
-	[SCNGeometryElement geometryElementWithData:indexData
-								  primitiveType:SCNGeometryPrimitiveTypeTriangleStrip
-								 primitiveCount:indexCount
-								  bytesPerIndex:sizeof(int)];
-	
-	// Create the geometry object with the sources and the element
-	SCNGeometry *geometry =
-	[SCNGeometry geometryWithSources:@[vertexSource, normalSource, textureSource]
-							elements:@[element]];
-	
-	// Give it a blue checker board texture
-	SCNMaterial *blueMaterial      = [SCNMaterial material];
-	blueMaterial.diffuse.contents  = [NSImage imageNamed:@"checkerboard"];
-	blueMaterial.specular.contents = [NSColor darkGrayColor];
-	blueMaterial.shininess         = 0.25;
-	
-	// Scale down the image when used as a texture ...
-	blueMaterial.diffuse.contentsTransform = CATransform3DMakeScale(5.0, 5.0, 1.0);
-	// ... and make it repeat
-	blueMaterial.diffuse.wrapS = SCNRepeat;
-	blueMaterial.diffuse.wrapT = SCNRepeat;
-	
-	geometry.materials = @[blueMaterial];
-	
-	return geometry;
-}
 /*
  func makeFloor() -> SCNNode {
  let floor = SCNFloor()
