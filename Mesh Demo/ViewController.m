@@ -23,7 +23,7 @@
 
 	SCNScene *scene = [[SCNScene alloc] init];
 	self.sceneView.scene = scene;
-	self.sceneView.backgroundColor = [NSColor blueColor];
+	self.sceneView.backgroundColor = [NSColor lightGrayColor];
 
 	[self addMesh];
 	
