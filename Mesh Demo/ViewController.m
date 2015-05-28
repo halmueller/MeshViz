@@ -24,7 +24,7 @@
 	SCNScene *scene = [[SCNScene alloc] init];
 	self.sceneView.scene = scene;
 	self.sceneView.backgroundColor = [NSColor lightGrayColor];
-
+	self.sceneView.showsStatistics = YES;
 	[self addMesh];
 	
 	[scene.rootNode addChildNode:[[self class] ambientLights]];
