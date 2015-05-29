@@ -10,7 +10,7 @@
 @import GLKit;
 
 @interface MVKMesh ()
-@property (nonatomic, strong) SCNGeometry *geometry;
+@property (nonatomic, strong) SCNGeometry *surfaceGeometry;
 @end
 
 @implementation MVKMesh
@@ -18,7 +18,7 @@
 - (id)initWithMultiplier:(double)multipler;
 {
 	if (self = [super init]) {
-		_geometry = [[self class] meshGeometry:multipler];
+		_surfaceGeometry = [[self class] meshGeometry:multipler];
 	}
 	return self;
 }
@@ -27,7 +27,7 @@
 {
 	// modified from https://github.com/d-ronnqvist/SCNBook-code/tree/master/Chapter%2007%20-%20Custom%20Mesh%20Geometry
 	
-#define MeshSize 50
+#define MeshSize 512
 	int width  = MeshSize;
 	int height = MeshSize;
 	
@@ -118,36 +118,30 @@
 	
 	
 	// Create sources for the vertext/normal/texture data
-	SCNGeometrySource *vertexSource  =
-	[SCNGeometrySource geometrySourceWithVertices:vertices
-											count:pointCount];
-	SCNGeometrySource *normalSource  =
-	[SCNGeometrySource geometrySourceWithNormals:normals
-										   count:pointCount];
-	SCNGeometrySource *textureSource =
-	[SCNGeometrySource geometrySourceWithTextureCoordinates:UVs
-													  count:pointCount];
+	SCNGeometrySource *vertexSource  = [SCNGeometrySource geometrySourceWithVertices:vertices
+																			   count:pointCount];
+	SCNGeometrySource *normalSource  = [SCNGeometrySource geometrySourceWithNormals:normals
+																			  count:pointCount];
+	SCNGeometrySource *textureSource = [SCNGeometrySource geometrySourceWithTextureCoordinates:UVs
+																						 count:pointCount];
 	
 	
 	// Create index data ...
 	NSData *surfaceIndexData = [NSData dataWithBytes:surfaceIndices
 											  length:sizeof(surfaceIndices)*surfaceIndexCount];
 	// ... and use it to create the geometry element
-	SCNGeometryElement *surfaceElement =
-	[SCNGeometryElement geometryElementWithData:surfaceIndexData
-								  primitiveType:SCNGeometryPrimitiveTypeTriangleStrip
-								 primitiveCount:surfaceIndexCount
-								  bytesPerIndex:sizeof(int)];
-	SCNGeometryElement *lineElement =
-	[SCNGeometryElement geometryElementWithData:surfaceIndexData
-								  primitiveType:SCNGeometryPrimitiveTypeLine
-								 primitiveCount:surfaceIndexCount
-								  bytesPerIndex:sizeof(int)];
+	SCNGeometryElement *surfaceElement = [SCNGeometryElement geometryElementWithData:surfaceIndexData
+																	   primitiveType:SCNGeometryPrimitiveTypeTriangleStrip
+																	  primitiveCount:surfaceIndexCount
+																	   bytesPerIndex:sizeof(int)];
+	SCNGeometryElement *lineElement = [SCNGeometryElement geometryElementWithData:surfaceIndexData
+																	primitiveType:SCNGeometryPrimitiveTypeLine
+																   primitiveCount:surfaceIndexCount
+																	bytesPerIndex:sizeof(int)];
 	
 	// Create the geometry object with the sources and the element
-	SCNGeometry *geometry =
-	[SCNGeometry geometryWithSources:@[vertexSource, normalSource, textureSource]
-							elements:@[surfaceElement]];
+	SCNGeometry *topGeometry = [SCNGeometry geometryWithSources:@[vertexSource, normalSource, textureSource]
+													elements:@[surfaceElement]];
 	// Give it a blue checker board texture
 	SCNMaterial *blueCheckerboardMaterial      = [SCNMaterial material];
 	blueCheckerboardMaterial.diffuse.contents  = [NSImage imageNamed:@"checkerboard"];
@@ -161,17 +155,18 @@
 	blueCheckerboardMaterial.diffuse.wrapT = SCNRepeat;
 	
 	SCNMaterial *yellowMaterial             = [SCNMaterial material];
-	yellowMaterial.ambient.contents         = [NSColor yellowColor];
-	yellowMaterial.cullMode = SCNCullFront;
-	yellowMaterial.doubleSided = NO;
+	yellowMaterial.diffuse.contents         = [NSColor yellowColor];
+//	yellowMaterial.cullMode = SCNCullFront;
+//	yellowMaterial.doubleSided = YES;
 	
 	SCNMaterial *lineMaterial      = [SCNMaterial material];
 	lineMaterial.emission.contents = [NSColor whiteColor];
 	
-	geometry.materials = @[blueCheckerboardMaterial];
-//	geometry.materials = @[lineMaterial];
-	NSLog(@"geometry element count %zd", geometry.geometryElementCount);
-	return geometry;
+//	topGeometry.materials = @[yellowMaterial];
+	topGeometry.materials = @[blueCheckerboardMaterial];
+//	topGeometry.materials = @[lineMaterial];
+	NSLog(@"geometry element count %zd", topGeometry.geometryElementCount);
+	return topGeometry;
 }
 
 @end

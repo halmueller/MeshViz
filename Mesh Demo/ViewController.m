@@ -161,7 +161,7 @@ typedef struct {
 - (void)addMesh
 {
 	self.mesh = [[MVKMesh alloc] initWithMultiplier:3.0];
-	[self.sceneView.scene.rootNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.geometry]];
+	[self.sceneView.scene.rootNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.surfaceGeometry]];
 }
 
 - (void)addSeashell:(SCNScene *)scene;

@@ -9,7 +9,7 @@
 #import <SceneKit/SceneKit.h>
 
 @interface MVKMesh : SCNGeometry
-@property (nonatomic, readonly) SCNGeometry *geometry;
+@property (nonatomic, readonly) SCNGeometry *surfaceGeometry;
 
 - (instancetype)initWithMultiplier:(double)multipler;
 
