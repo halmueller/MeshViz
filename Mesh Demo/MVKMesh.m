@@ -23,7 +23,7 @@
 	
 	// modified from https://github.com/d-ronnqvist/SCNBook-code/tree/master/Chapter%2007%20-%20Custom%20Mesh%20Geometry
 	
-#define MeshSize 512
+#define MeshSize 1024
 	int width  = MeshSize;
 	int height = MeshSize;
 	
@@ -119,17 +119,22 @@
 	// Create sources for the vertext/normal/texture data
 	SCNGeometrySource *vertexSource  = [SCNGeometrySource geometrySourceWithVertices:vertices
 																			   count:pointCount];
+	free(vertices);
 	SCNGeometrySource *normalSource  = [SCNGeometrySource geometrySourceWithNormals:normals
 																			  count:pointCount];
+	free(normals);
 	SCNGeometrySource *reverseNormalSource  = [SCNGeometrySource geometrySourceWithNormals:reverseNormals
 																					 count:pointCount];
+	free(reverseNormals);
 	SCNGeometrySource *textureSource = [SCNGeometrySource geometrySourceWithTextureCoordinates:UVs
 																						 count:pointCount];
+	free(UVs);
 	
 	
 	// Create index data ...
 	NSData *surfaceIndexData = [NSData dataWithBytes:surfaceIndices
 											  length:sizeof(surfaceIndices)*surfaceIndexCount];
+	free(surfaceIndices);
 	// ... and use it to create the geometry element
 	SCNGeometryElement *topSurfaceElement = [SCNGeometryElement geometryElementWithData:surfaceIndexData
 																	   primitiveType:SCNGeometryPrimitiveTypeTriangleStrip
