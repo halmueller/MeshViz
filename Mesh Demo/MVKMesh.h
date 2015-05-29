@@ -9,8 +9,10 @@
 #import <SceneKit/SceneKit.h>
 
 @interface MVKMesh : SCNGeometry
-@property (nonatomic, readonly) SCNGeometry *surfaceGeometry;
+@property (nonatomic, readonly) SCNGeometry *topSurfaceGeometry;
+@property (nonatomic, readonly) SCNGeometry *bottomSurfaceGeometry;
+@property (nonatomic, readonly) SCNGeometry *lineGeometry;
 
-- (instancetype)initWithMultiplier:(double)multipler;
++ (instancetype)cosineWaveMesh;
 
 @end

@@ -10,21 +10,17 @@
 @import GLKit;
 
 @interface MVKMesh ()
-@property (nonatomic, strong) SCNGeometry *surfaceGeometry;
+@property (nonatomic, strong) SCNGeometry *topSurfaceGeometry;
+@property (nonatomic, strong) SCNGeometry *bottomSurfaceGeometry;
+@property (nonatomic, strong) SCNGeometry *lineGeometry;
 @end
 
 @implementation MVKMesh
 
-- (id)initWithMultiplier:(double)multipler;
++ (instancetype)cosineWaveMesh;
 {
-	if (self = [super init]) {
-		_surfaceGeometry = [[self class] meshGeometry:multipler];
-	}
-	return self;
-}
-
-+ (SCNGeometry *)meshGeometry:(double) multiplier
-{
+	MVKMesh *result = [MVKMesh new];
+	
 	// modified from https://github.com/d-ronnqvist/SCNBook-code/tree/master/Chapter%2007%20-%20Custom%20Mesh%20Geometry
 	
 #define MeshSize 512
@@ -70,6 +66,7 @@
 	NSUInteger pointCount = width * height;
 	SCNVector3 *vertices = calloc(pointCount, sizeof(SCNVector3));
 	SCNVector3 *normals  = calloc(pointCount, sizeof(SCNVector3));
+	SCNVector3 *reverseNormals  = calloc(pointCount, sizeof(SCNVector3));
 	CGPoint    *UVs = calloc(pointCount, sizeof(CGPoint));
 	
 	
@@ -77,7 +74,7 @@
 	GLKVector3(^function)(float, float) = ^(float x, float z) {
 		float angle = 1.0/2.0 * sqrt(pow(x, 2) + pow(z, 2));
 		return GLKVector3Make(x,
-							  multiplier * cos(angle),
+							  3. * cos(angle),
 							  z);
 	};
 	
@@ -109,6 +106,8 @@
 			
 			GLKVector3 normal = GLKVector3Normalize( GLKVector3CrossProduct(dz, dx) );
 			normals[index] = SCNVector3FromGLKVector3(normal);
+			GLKVector3 reverseNormal = GLKVector3Negate(normal);
+			reverseNormals[index] = SCNVector3FromGLKVector3(reverseNormal);
 			
 			// Texture data
 			UVs[index] = CGPointMake(w/(CGFloat)(width-1),
@@ -122,6 +121,8 @@
 																			   count:pointCount];
 	SCNGeometrySource *normalSource  = [SCNGeometrySource geometrySourceWithNormals:normals
 																			  count:pointCount];
+	SCNGeometrySource *reverseNormalSource  = [SCNGeometrySource geometrySourceWithNormals:reverseNormals
+																					 count:pointCount];
 	SCNGeometrySource *textureSource = [SCNGeometrySource geometrySourceWithTextureCoordinates:UVs
 																						 count:pointCount];
 	
@@ -130,7 +131,7 @@
 	NSData *surfaceIndexData = [NSData dataWithBytes:surfaceIndices
 											  length:sizeof(surfaceIndices)*surfaceIndexCount];
 	// ... and use it to create the geometry element
-	SCNGeometryElement *surfaceElement = [SCNGeometryElement geometryElementWithData:surfaceIndexData
+	SCNGeometryElement *topSurfaceElement = [SCNGeometryElement geometryElementWithData:surfaceIndexData
 																	   primitiveType:SCNGeometryPrimitiveTypeTriangleStrip
 																	  primitiveCount:surfaceIndexCount
 																	   bytesPerIndex:sizeof(int)];
@@ -140,8 +141,19 @@
 																	bytesPerIndex:sizeof(int)];
 	
 	// Create the geometry object with the sources and the element
-	SCNGeometry *topGeometry = [SCNGeometry geometryWithSources:@[vertexSource, normalSource, textureSource]
-													elements:@[surfaceElement]];
+	result.topSurfaceGeometry = [SCNGeometry geometryWithSources:@[vertexSource, normalSource, textureSource]
+														elements:@[topSurfaceElement]];
+	result.bottomSurfaceGeometry = [SCNGeometry geometryWithSources:@[vertexSource, reverseNormalSource, textureSource]
+														   elements:@[topSurfaceElement]];
+	result.lineGeometry = [SCNGeometry geometryWithSources:@[vertexSource] elements:@[lineElement]];
+	
+	[result addDefaultMaterials];
+	
+	return result;
+}
+
+- (void)addDefaultMaterials;
+{
 	// Give it a blue checker board texture
 	SCNMaterial *blueCheckerboardMaterial      = [SCNMaterial material];
 	blueCheckerboardMaterial.diffuse.contents  = [NSImage imageNamed:@"checkerboard"];
@@ -153,20 +165,18 @@
 	// ... and make it repeat
 	blueCheckerboardMaterial.diffuse.wrapS = SCNRepeat;
 	blueCheckerboardMaterial.diffuse.wrapT = SCNRepeat;
+	self.topSurfaceGeometry.materials = @[blueCheckerboardMaterial];
 	
 	SCNMaterial *yellowMaterial             = [SCNMaterial material];
 	yellowMaterial.diffuse.contents         = [NSColor yellowColor];
-//	yellowMaterial.cullMode = SCNCullFront;
-//	yellowMaterial.doubleSided = YES;
+	yellowMaterial.cullMode = SCNCullFront;
+	//	yellowMaterial.doubleSided = YES;
+	self.bottomSurfaceGeometry.materials = @[yellowMaterial];
 	
 	SCNMaterial *lineMaterial      = [SCNMaterial material];
-	lineMaterial.emission.contents = [NSColor whiteColor];
-	
-//	topGeometry.materials = @[yellowMaterial];
-	topGeometry.materials = @[blueCheckerboardMaterial];
-//	topGeometry.materials = @[lineMaterial];
-	NSLog(@"geometry element count %zd", topGeometry.geometryElementCount);
-	return topGeometry;
+	lineMaterial.emission.contents = [NSColor greenColor];
+	self.lineGeometry.materials = @[lineMaterial];
+
 }
 
 @end
