@@ -161,9 +161,12 @@ typedef struct {
 - (void)addMesh
 {
 	self.mesh = [MVKMesh cosineWaveMesh];
-	[self.sceneView.scene.rootNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.lineGeometry]];
-	[self.sceneView.scene.rootNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.topSurfaceGeometry]];
-	[self.sceneView.scene.rootNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.bottomSurfaceGeometry]];
+	SCNNode *meshNode = [SCNNode node];
+	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.lineGeometry]];
+	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.topSurfaceGeometry]];
+	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.bottomSurfaceGeometry]];
+	
+	[self.sceneView.scene.rootNode addChildNode:[meshNode flattenedClone]];
 }
 
 - (void)addSeashell:(SCNScene *)scene;
