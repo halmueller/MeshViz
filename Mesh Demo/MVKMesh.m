@@ -23,7 +23,7 @@
 	
 	// modified from https://github.com/d-ronnqvist/SCNBook-code/tree/master/Chapter%2007%20-%20Custom%20Mesh%20Geometry
 	
-#define MeshSize 128
+#define MeshSize 1024
 	int width  = MeshSize;
 	int height = MeshSize;
 	
@@ -69,7 +69,6 @@
 			int finish = start + 1;
 			gridIndices[gridIndicesIndex++] = start;
 			gridIndices[gridIndicesIndex++] = finish;
-			NSLog(@"+ %d %d", start, finish);
 		}
 		if (h < height-2) {
 			for (int w = 0; w < width-1; w++) {
@@ -77,12 +76,10 @@
 				int finish = start + width;
 				gridIndices[gridIndicesIndex++] = start;
 				gridIndices[gridIndicesIndex++] = finish;
-				NSLog(@"- %d %d", start, finish);
 			}
 		}
 	}
-	NSLog(@"width %d height %d. %d endpoints entered", width, height, gridIndicesIndex);
-	NSAssert(gridIndexCount >= gridIndicesIndex, @"%zd %zd: should have added as many lines as the size of the buffer", gridIndexCount, gridIndicesIndex);
+	NSAssert(gridIndexCount >= gridIndicesIndex, @"%zd %zd: added more endpoint pairs than buffer size allocated", gridIndexCount, gridIndicesIndex);
 	
 	
 	// Generate the source data for the mesh
