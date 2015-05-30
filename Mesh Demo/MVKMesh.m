@@ -23,40 +23,66 @@
 	
 	// modified from https://github.com/d-ronnqvist/SCNBook-code/tree/master/Chapter%2007%20-%20Custom%20Mesh%20Geometry
 	
-#define MeshSize 1024
+#define MeshSize 128
 	int width  = MeshSize;
 	int height = MeshSize;
 	
 	
-	// Generate the index data for the mesh
-	// ------------------------------------
+	// Generate the index data for the mesh surface
+	// --------------------------------------------
 	
 	NSUInteger surfaceIndexCount = (2 * width + 1) * (height-1);
 	// Create a buffer for the index data
 	int *surfaceIndices = calloc(surfaceIndexCount, sizeof(int));
 	
-	// Generate index data as desscribed in the chapter
-	int i = 0;
+	// Generate surface index data as desscribed in the chapter
+	int surfaceIndicesIndex = 0;
 	for (int h=0 ; h<height-1 ; h++) {
 		BOOL isEven = h%2 == 0;
 		if (isEven) {
 			// --->
 			for (int w=0 ; w<width ; w++) {
-				surfaceIndices[i++] =  h    * width + w;
-				surfaceIndices[i++] = (h+1) * width + w;
+				surfaceIndices[surfaceIndicesIndex++] =  h    * width + w;
+				surfaceIndices[surfaceIndicesIndex++] = (h+1) * width + w;
 			}
 		} else {
 			// <---
 			for (int w=width-1 ; w>=0 ; w--) {
-				surfaceIndices[i++] = (h+0) * width + w;
-				surfaceIndices[i++] = (h+1) * width + w;
+				surfaceIndices[surfaceIndicesIndex++] = (h+0) * width + w;
+				surfaceIndices[surfaceIndicesIndex++] = (h+1) * width + w;
 			}
 		}
-		int previous = surfaceIndices[i-1];
-		surfaceIndices[i++] = previous;
+		int previous = surfaceIndices[surfaceIndicesIndex-1];
+		surfaceIndices[surfaceIndicesIndex++] = previous;
 	}
-	NSAssert(surfaceIndexCount == i, @"Should have added as many lines as the size of the buffer");
+	NSAssert(surfaceIndexCount == surfaceIndicesIndex, @"Should have added as many lines as the size of the buffer");
 	
+
+	// generate wireframe line index data
+	NSUInteger gridIndexCount = ((width * height * 2) + width + height) * 2;
+	int *gridIndices = calloc(gridIndexCount, sizeof(int));
+	
+	int gridIndicesIndex = 0;
+	for (int h = 0; h < height-1; h++ ) {
+		for (int w = 0; w < width-1; w++) {
+			int start = h*(width ) + w;
+			int finish = start + 1;
+			gridIndices[gridIndicesIndex++] = start;
+			gridIndices[gridIndicesIndex++] = finish;
+			NSLog(@"+ %d %d", start, finish);
+		}
+		if (h < height-2) {
+			for (int w = 0; w < width-1; w++) {
+				int start = h*(width ) + w;
+				int finish = start + width;
+				gridIndices[gridIndicesIndex++] = start;
+				gridIndices[gridIndicesIndex++] = finish;
+				NSLog(@"- %d %d", start, finish);
+			}
+		}
+	}
+	NSLog(@"width %d height %d. %d endpoints entered", width, height, gridIndicesIndex);
+	NSAssert(gridIndexCount >= gridIndicesIndex, @"%zd %zd: should have added as many lines as the size of the buffer", gridIndexCount, gridIndicesIndex);
 	
 	
 	// Generate the source data for the mesh
@@ -74,7 +100,7 @@
 	GLKVector3(^function)(float, float) = ^(float x, float z) {
 		float angle = 1.0/2.0 * sqrt(pow(x, 2) + pow(z, 2));
 		return GLKVector3Make(x,
-							  3. * cos(angle),
+							  6 + 3. * cos(angle),
 							  z);
 	};
 	
@@ -116,7 +142,7 @@
 	}
 	
 	
-	// Create sources for the vertext/normal/texture data
+	// Create sources for the vertex/normal/texture data
 	SCNGeometrySource *vertexSource  = [SCNGeometrySource geometrySourceWithVertices:vertices
 																			   count:pointCount];
 	free(vertices);
@@ -140,9 +166,12 @@
 																	   primitiveType:SCNGeometryPrimitiveTypeTriangleStrip
 																	  primitiveCount:surfaceIndexCount
 																	   bytesPerIndex:sizeof(int)];
-	SCNGeometryElement *lineElement = [SCNGeometryElement geometryElementWithData:surfaceIndexData
+	
+	
+	NSData *lineIndexData = [NSData dataWithBytes:gridIndices length:sizeof(surfaceIndices)*gridIndexCount];
+	SCNGeometryElement *lineElement = [SCNGeometryElement geometryElementWithData:lineIndexData
 																	primitiveType:SCNGeometryPrimitiveTypeLine
-																   primitiveCount:surfaceIndexCount
+																   primitiveCount:gridIndexCount
 																	bytesPerIndex:sizeof(int)];
 	
 	// Create the geometry object with the sources and the element
@@ -150,6 +179,9 @@
 														elements:@[topSurfaceElement]];
 	result.bottomSurfaceGeometry = [SCNGeometry geometryWithSources:@[vertexSource, reverseNormalSource, textureSource]
 														   elements:@[topSurfaceElement]];
+	
+	
+	
 	result.lineGeometry = [SCNGeometry geometryWithSources:@[vertexSource] elements:@[lineElement]];
 	
 	[result addDefaultMaterials];
@@ -180,6 +212,7 @@
 	
 	SCNMaterial *lineMaterial      = [SCNMaterial material];
 	lineMaterial.emission.contents = [NSColor greenColor];
+	lineMaterial.emission.contents = [NSColor blackColor];
 	self.lineGeometry.materials = @[lineMaterial];
 
 }

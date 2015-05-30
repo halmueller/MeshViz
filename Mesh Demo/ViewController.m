@@ -28,7 +28,7 @@
 	[self addMesh];
 	
 	[scene.rootNode addChildNode:[[self class] ambientLights]];
-//	[scene.rootNode addChildNode:[[self class] floorNode]];
+	[scene.rootNode addChildNode:[[self class] floorNode]];
 
 /*	let scene = SCNScene()
 	let sceneView = SCNView()
@@ -198,9 +198,10 @@ typedef struct {
 	floorNode.geometry = floor;
 	SCNMaterial *floorMaterial = [SCNMaterial new];
 	floorMaterial.litPerPixel = NO;
-	floorMaterial.diffuse.contents = [NSImage imageNamed:@"green2.png"];
-	floorMaterial.diffuse.wrapS = SCNWrapModeRepeat;
-	floorMaterial.diffuse.wrapT = SCNWrapModeRepeat;
+	floorMaterial.diffuse.contents = [NSColor blackColor];
+//	floorMaterial.diffuse.contents = [NSImage imageNamed:@"green2.png"];
+//	floorMaterial.diffuse.wrapS = SCNWrapModeRepeat;
+//	floorMaterial.diffuse.wrapT = SCNWrapModeRepeat;
 	floor.materials = @[floorMaterial];
 	return floorNode;
 }
