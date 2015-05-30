@@ -166,7 +166,7 @@ typedef struct {
 	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.topSurfaceGeometry]];
 	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.bottomSurfaceGeometry]];
 	
-	[self.sceneView.scene.rootNode addChildNode:[meshNode flattenedClone]];
+	[self.sceneView.scene.rootNode addChildNode:meshNode];
 }
 
 - (void)addSeashell:(SCNScene *)scene;
