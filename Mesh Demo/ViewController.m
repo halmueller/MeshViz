@@ -25,10 +25,10 @@
 	self.sceneView.scene = scene;
 	self.sceneView.backgroundColor = [NSColor lightGrayColor];
 	self.sceneView.showsStatistics = YES;
-	[self addMesh];
+	[self addGeoclawFile:[NSURL fileURLWithPath:@"/Users/hal/Downloads/viewpandem.txt"]];
 	
 	[scene.rootNode addChildNode:[[self class] ambientLights]];
-	[scene.rootNode addChildNode:[[self class] floorNode]];
+//	[scene.rootNode addChildNode:[[self class] floorNode]];
 
 /*	let scene = SCNScene()
 	let sceneView = SCNView()
@@ -167,6 +167,23 @@ typedef struct {
 	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.bottomSurfaceGeometry]];
 	
 	[self.sceneView.scene.rootNode addChildNode:meshNode];
+}
+
+- (void)addGeoclawFile:(NSURL *)geoclawURL
+{
+	NSError *error;
+	self.mesh = [MVKMesh meshFromGeoClawExport:geoclawURL encoding:NSUTF8StringEncoding error:&error];
+	if (self.mesh) {
+		SCNNode *meshNode = [SCNNode node];
+		[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.lineGeometry]];
+		[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.topSurfaceGeometry]];
+		[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.bottomSurfaceGeometry]];
+		
+		[self.sceneView.scene.rootNode addChildNode:meshNode];
+	}
+	else {
+		NSLog(@"error adding Geoclaw file %@ %@", geoclawURL, error.localizedFailureReason);
+	}
 }
 
 - (void)addSeashell:(SCNScene *)scene;

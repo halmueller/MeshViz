@@ -14,5 +14,6 @@
 @property (nonatomic, readonly) SCNGeometry *lineGeometry;
 
 + (instancetype)cosineWaveMesh;
++ (instancetype)meshFromGeoClawExport:(NSURL *)exportedFile encoding:(NSStringEncoding)encoding error:(NSError **)error;
 
 @end
