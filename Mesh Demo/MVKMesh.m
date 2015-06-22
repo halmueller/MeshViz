@@ -13,6 +13,10 @@
 @property (nonatomic, strong) SCNGeometry *topSurfaceGeometry;
 @property (nonatomic, strong) SCNGeometry *bottomSurfaceGeometry;
 @property (nonatomic, strong) SCNGeometry *lineGeometry;
+@property (nonatomic, assign) double eastEdgeMeters;
+@property (nonatomic, assign) double westEdgeMeters;
+@property (nonatomic, assign) double northEdgeMeters;
+@property (nonatomic, assign) double southEdgeMeters;
 @end
 
 @implementation MVKMesh
@@ -41,10 +45,17 @@
 		// That means the SceneKit X axis corresponds to Geoclaw Y, and SceneKit Z is Geoclaw X.
 		// xllcorner -> longitude -> SK Z.
 		// yllcorner -> latitude -> SK X.
-		float westEdge = [fileLines[2] doubleValue];
-		float southEdge = [fileLines[3] doubleValue];
-		float eastingIncrement = [fileLines[4] doubleValue];
-		float northingIncrement = [fileLines[4] doubleValue];
+		float westEdgeDegrees = [fileLines[2] doubleValue];
+		float southEdgeDegrees = [fileLines[3] doubleValue];
+		result.westEdgeMeters = 0.;
+		result.southEdgeMeters = 0.;
+		float eastingIncrementDegrees = [fileLines[4] doubleValue];
+		float northingIncrementDegrees = [fileLines[4] doubleValue];
+#define metersPerDegreeLatitude (1852 * 60.)
+		float northingIncrementMeters = northingIncrementDegrees * metersPerDegreeLatitude;
+		float eastingIncrementMeters = northingIncrementMeters * cos(southEdgeDegrees * M_PI/180.);
+		result.eastEdgeMeters = result.westEdgeMeters + ncolumns * eastingIncrementMeters;
+		result.northEdgeMeters = result.southEdgeMeters + nrows * northingIncrementMeters;
 		
 		NSMutableArray *dataColumns = [NSMutableArray arrayWithCapacity:(fileLines.count - firstDataRow)];
 		for (NSUInteger columnNumber = 0; columnNumber < ncolumns; columnNumber++) {
@@ -121,15 +132,15 @@
 		for (int rowNumber = 0 ; rowNumber<nrows ; rowNumber++) {
 			for (int columnNumber = 0 ; columnNumber<ncolumns ; columnNumber++) {
 				// Calculate x and z for this point
-				CGFloat northing = columnNumber * northingIncrement + southEdge;
-				CGFloat easting = rowNumber * eastingIncrement + westEdge;
+				CGFloat northing = columnNumber * northingIncrementMeters + result.southEdgeMeters;
+				CGFloat easting = rowNumber * eastingIncrementMeters + result.westEdgeMeters;
 				
 				// The index for the vertex/normal/texture buffers
 				NSUInteger index = rowNumber*ncolumns + columnNumber;
 				
 				// Vertex data
-				double elevation = log([dataColumns[columnNumber][rowNumber] doubleValue] * .001);
-				GLKVector3 current = GLKVector3Make(northing, elevation, easting);
+				double elevationMeters = [dataColumns[columnNumber][rowNumber] doubleValue] * 10.;
+				GLKVector3 current = GLKVector3Make(northing, elevationMeters, easting);
 				vertices[index] = SCNVector3FromGLKVector3(current);
 				
 				// Normal data

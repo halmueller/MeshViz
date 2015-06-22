@@ -18,6 +18,8 @@
 
 @implementation ViewController
 
+static NSString *meshName = @"mesh";
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
@@ -26,10 +28,18 @@
 	self.sceneView.backgroundColor = [NSColor lightGrayColor];
 	self.sceneView.showsStatistics = YES;
 	[self addGeoclawFile:[NSURL fileURLWithPath:@"/Users/hal/Downloads/viewpandem.txt"]];
+	[self addMesh];
 	
 	[scene.rootNode addChildNode:[[self class] ambientLights]];
 //	[scene.rootNode addChildNode:[[self class] floorNode]];
 
+//	SCNNode *cameraNode = [SCNNode node];
+//	cameraNode.camera = [SCNCamera camera];
+//	[scene.rootNode addChildNode:cameraNode];
+//	SCNNode *meshNode = [scene.rootNode childNodeWithName:meshName recursively:YES];
+//	cameraNode.constraints = [cameraNode.constraints arrayByAddingObject:[SCNLookAtConstraint lookAtConstraintWithTarget:meshNode]];
+	
+//	self.sceneView.cam
 /*	let scene = SCNScene()
 	let sceneView = SCNView()
 	sceneView.frame = self.view.frame
@@ -162,6 +172,7 @@ typedef struct {
 {
 	self.mesh = [MVKMesh cosineWaveMesh];
 	SCNNode *meshNode = [SCNNode node];
+	meshNode.name = meshName;
 	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.lineGeometry]];
 	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.topSurfaceGeometry]];
 	[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.bottomSurfaceGeometry]];
@@ -175,6 +186,7 @@ typedef struct {
 	self.mesh = [MVKMesh meshFromGeoClawExport:geoclawURL encoding:NSUTF8StringEncoding error:&error];
 	if (self.mesh) {
 		SCNNode *meshNode = [SCNNode node];
+		meshNode.name = meshName;
 		[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.lineGeometry]];
 		[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.topSurfaceGeometry]];
 		[meshNode addChildNode:[SCNNode nodeWithGeometry:self.mesh.bottomSurfaceGeometry]];
