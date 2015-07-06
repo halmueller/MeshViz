@@ -129,8 +129,8 @@
 		SCNVector3 *reverseNormals  = calloc(pointCount, sizeof(SCNVector3));
 		CGPoint    *UVs = calloc(pointCount, sizeof(CGPoint));
 		
-		for (int rowNumber = 0 ; rowNumber<nrows ; rowNumber++) {
-			for (int columnNumber = 0 ; columnNumber<ncolumns ; columnNumber++) {
+		for (int rowNumber = 0 ; rowNumber < nrows ; rowNumber++) {
+			for (int columnNumber = 0 ; columnNumber < ncolumns ; columnNumber++) {
 				// Calculate x and z for this point
 				CGFloat northing = columnNumber * northingIncrementMeters + result.southEdgeMeters;
 				CGFloat easting = rowNumber * eastingIncrementMeters + result.westEdgeMeters;
@@ -143,31 +143,47 @@
 				GLKVector3 current = GLKVector3Make(northing, elevationMeters, easting);
 				vertices[index] = SCNVector3FromGLKVector3(current);
 				
+				/*
+				 From http://stackoverflow.com/questions/13983189/opengl-how-to-calculate-normals-in-a-terrain-height-grid
+				 
+				 vec3 off = vec3(1.0, 1.0, 0.0);
+				 float hL = height(P.xy - off.xz);
+				 float hR = height(P.xy + off.xz);
+				 float hD = height(P.xy - off.zy);
+				 float hU = height(P.xy + off.zy);
+				 
+				 // deduce terrain normal
+				 N.x = hL - hR;
+				 N.y = hD - hU;
+				 N.z = 2.0;
+				 N = normalize(N);
+				 */
+
 				// Normal data
-//				CGFloat delta = 0.001;
-//				GLKVector3 nextYAlongXAxis;
-//				if (columnNumber < ncolumns-1) {
-//					nextYAlongXAxis = GLKVector3Make(northing+northingIncrement, [dataColumns[columnNumber][rowNumber+1] doubleValue], easting);
-//				}
-//				else {
-//					nextYAlongXAxis = current;
-//				}
-//				GLKVector3 nextYAlongZAxis;
-//				if (rowNumber < nrows-1) {
-//					nextYAlongZAxis = GLKVector3Make(northing, [dataColumns[columnNumber+1][rowNumber] doubleValue], easting + eastingIncrement);
-//				}
-//				else {
-//					nextYAlongZAxis = current;
-//				}
-//				
-//				GLKVector3 dx = GLKVector3Subtract(nextYAlongXAxis, current);
-//				GLKVector3 dz = GLKVector3Subtract(nextYAlongZAxis, current);
-//				
-//				GLKVector3 normal = GLKVector3Normalize( GLKVector3CrossProduct(dz, dx) );
-				GLKVector3 normal = GLKVector3Make(0., 1., 0.);
+				double Nx, Ny, Nz;
+				if ((columnNumber > 0) && (columnNumber < ncolumns-1)) {
+					double previousX = vertices[index-1].x;
+					double nextX = vertices[index+1].x;
+					Nx = nextX - previousX;
+				}
+				else {
+					Nx = 0.;
+				}
+				// FIXME: I need to reference previous/next rows, this is placeholder code
+				if ((rowNumber > 0) && (rowNumber < nrows-1)) {
+					double previousY = vertices[index-1].x;
+					double nextY = vertices[index+1].x;
+					Ny = nextY - previousY;
+				}
+				else {
+					Ny = 0.;
+				}
+				Nz = 2.0 * sqrt(eastingIncrementDegrees*eastingIncrementDegrees + northingIncrementMeters*northingIncrementMeters);
+				
+				GLKVector3 normal = GLKVector3Make(Nx, Ny, Nz);
 				normals[index] = SCNVector3FromGLKVector3(normal);
 				GLKVector3 reverseNormal = GLKVector3Negate(normal);
-				reverseNormals[index] = SCNVector3FromGLKVector3(reverseNormal);
+				reverseNormals[index] = SCNVector3FromGLKVector3(normal);
 				
 				// Texture data
 				UVs[index] = CGPointMake(columnNumber/(CGFloat)(ncolumns-1),
